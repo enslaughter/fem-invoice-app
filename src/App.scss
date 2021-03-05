@@ -1,0 +1,60 @@
+$violet: hsl(252, 94%, 67%);
+$lightviolet: hsl(252, 100%, 73%);
+$verydarkblue: hsl(233, 31%, 17%);
+$darkblue: hsl(233, 30%, 21%);
+
+$lightgrey: hsl(231, 73%, 93%);
+$grey: hsl(231, 20%, 61%);
+$blue: hsl(231, 37%, 63%);
+$midnight: hsl(228, 29%, 7%);
+
+$red: hsl(0, 80%, 63%);
+$lightred: hsl(0, 100%, 80%);
+$lightbg: hsl(240, 27%, 98%);
+$darkbg: hsl(233, 30%, 11%);
+
+body {
+  font-family: "Spartan", sans-serif;
+  font-size: 12px;
+  color: black;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  background-color: $lightbg;
+}
+
+.body-alt-style {
+  font-size: 11px;
+  line-height: 18px;
+  letter-spacing: -0.23px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -1px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: -0.63px;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.8px;
+}
+
+h4 {
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+}
