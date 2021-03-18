@@ -1,10 +1,10 @@
 
 
-function DeleteInvoice(){
+function DeleteInvoice(props: any){
     return(
-        <div>
-            Delete Invoice
-        </div>
+        <button style={props.style} className="invoice-app--button delete">
+            Delete
+        </button>
     )
 }
 

@@ -20,6 +20,7 @@ body {
   line-height: 15px;
   letter-spacing: -0.25px;
   background-color: $lightbg;
+  margin: 0;
 }
 
 .body-alt-style {
@@ -57,4 +58,426 @@ h4 {
   font-size: 12px;
   line-height: 15px;
   letter-spacing: -0.25px;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 12px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+//Menubar
+
+.menubar,
+.menu-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menubar {
+  background-color: hsl(231, 20%, 27%);
+  width: 100%;
+}
+
+.menu-logo {
+  width: 72px;
+  height: 72px;
+  background: $violet;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  .menu-logo--container {
+    position: relative;
+    z-index: 10;
+    transform: translate(20px, -14px);
+  }
+
+  .menu-logo--styling {
+    position: relative;
+    height: 36px;
+    width: 100%;
+    background: $lightviolet;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transform: translateY(100%);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.menu-button-nightmode {
+  margin: 20px 24px;
+
+  &:hover {
+    .menu-theme-icon path {
+      fill: #dfe3fa;
+    }
+  }
+}
+
+.menu-button-profile--container {
+  height: 72px;
+  padding: 0px 24px;
+  border-left: 1px solid hsla(231, 20, 36, 1);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.menu-button-profile {
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+  }
+}
+
+//CUSTOM BUTTONS
+
+.button-newinvoice {
+  background: $violet;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px;
+  border-radius: 24px;
+  width: 90px;
+  .button-newinvoice--plus {
+    width: 32px;
+    height: 32px;
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background-color: $lightviolet;
+  }
+}
+
+//INVOICE MENU
+
+.invoice-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 32px 24px;
+
+  .invoice-menu-right {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+//INVOICE CARDS
+
+.invoice-card {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 16px;
+  padding: 24px;
+  border-radius: 8px;
+  color: $grey;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  &:hover {
+    border-color: $violet;
+  }
+}
+
+.invoice-card-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.invoice-card--id {
+  color: $blue;
+}
+
+.invoice-card--duedate {
+  color: $blue;
+}
+
+.invoice-card--total {
+  color: $midnight;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: -0.8px;
+}
+
+.invoice-status {
+  height: 40px;
+  width: 104px;
+  font-weight: 700;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  &.paid {
+    color: hsl(160, 67, 52);
+    background-color: hsla(160, 67, 52, 0.06);
+  }
+
+  &.pending {
+    color: hsl(34, 100, 50);
+    background-color: hsla(34, 100, 50, 0.06);
+  }
+
+  &.draft {
+    color: hsl(231, 20, 27);
+    background-color: hsla(231, 20, 27, 0.06);
+  }
+}
+
+//Main Invoice Section
+
+.invoice-goback {
+  margin: 32px 24px;
+  color: black;
+  font-weight: 700;
+  &:hover {
+    color: $blue;
+  }
+}
+
+.invoice-main-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 24px;
+  margin: 0 24px;
+  color: hsl(231, 23, 61);
+  border-radius: 8px;
+}
+
+.invoice-info {
+  background-color: white;
+  margin: 16px 24px;
+  padding: 24px;
+  border-radius: 8px;
+  color: hsl(231, 36, 63);
+}
+
+.invoice-info--descripton {
+  margin-top: 4px;
+}
+
+.invoice-info--senderaddress {
+  margin-top: 30px;
+  line-height: 18px;
+}
+
+.invoice-info--clientaddress {
+  margin-top: 8px;
+  line-height: 18px;
+}
+
+.invoice-info--dates-billto-subheader {
+  margin-top: 12px;
+  color: $midnight;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.invoice-info--dates-billto-container {
+  display: flex;
+  flex-direction: row;
+  margin: 32px 0;
+}
+
+.invoice-info--dates,
+.invoice-info--billto {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.invoice-info--dates {
+  margin-right: 40px;
+}
+
+.invoice-info--items {
+  margin-top: 40px;
+}
+
+.invoice-item--container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: $midnight;
+  background-color: hsl(231, 67, 99);
+  font-weight: 700;
+  padding: 24px;
+}
+
+.invoice-info--total {
+  color: white;
+  background: $verydarkblue;
+  padding: 24px;
+  border-radius: 0px 0px 8px 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.invoice-edit {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  padding: 24px;
+}
+
+.invoice-app--button {
+  padding: 16px 28px;
+  border-radius: 24px;
+
+  &.markpaid {
+    color: white;
+    background-color: $violet;
+    &:hover {
+      background-color: $lightviolet;
+    }
+  }
+
+  &.delete {
+    color: white;
+    background-color: $red;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &.edit {
+    color: $blue;
+    background-color: hsl(231, 67, 99);
+    &:hover {
+      background-color: hsl(231, 75, 93);
+    }
+  }
+}
+
+// EDIT INVOICE SECTION
+
+.edit-invoice-container {
+  position: fixed;
+  top: 72px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 11;
+}
+
+.edit-invoice-modal {
+  z-index: 12;
+  max-height: calc(100% - 52px);
+  padding-bottom: 72px;
+  overflow-y: scroll;
+}
+
+form {
+  width: 100%;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  border: 1 px solid $grey;
+  font-weight: 700;
+  padding: 16px;
+}
+
+.edit-invoice-modal {
+  padding: 24px;
+  background-color: white;
+}
+
+.form-flexbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  & label {
+    align-self: flex-start;
+  }
+
+  & input,
+  select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.form-flexbox--row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  & div {
+    flex-grow: 1;
+  }
+}
+
+.form-flexbox--invoiceitems {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & div {
+    margin-right: 16px;
+  }
+}
+
+.form-newitem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & button {
+    color: $blue;
+    background-color: hsl(231, 67, 99);
+    width: 100%;
+    height: 48px;
+    border-radius: 24px;
+
+    &:hover {
+      background-color: hsl(231, 75, 93);
+    }
+  }
 }
