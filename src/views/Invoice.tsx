@@ -9,7 +9,7 @@ import InvoiceStatus from "../components/InvoiceStatus";
 import EditInvoice from "../components/buttons/EditInvoice";
 import DeleteInvoice from "../components/buttons/DeleteInvoice";
 import MarkPaid from "../components/buttons/MarkPaid";
-import { preProcessFile } from "typescript";
+import {deepClone} from "../components/Functionality";
 
 function Invoice(props: any){
     interface ParamTypes {
@@ -36,6 +36,11 @@ function Invoice(props: any){
     function handleFormChange(event: any){
         const propName = event.target.name;
         const value = event.target.value;
+
+        if (event.target.tagName == "SELECT"){
+            console.log(propName + " " + value);
+            console.log(typeof value)
+        }
 
         setEditedInvoice((prevState: any) => {
             return {...prevState, [propName]: value}
@@ -142,6 +147,8 @@ function Invoice(props: any){
     }
 
     function closeEditModal(){
+        setEditedInvoice({...invoiceData});
+        console.log(JSON.stringify(editedInvoice));
         setEditOpen(false);
         props.setModalOpen(false);
     }
@@ -290,11 +297,11 @@ function Invoice(props: any){
                                 <input type="date" name="createdAt" id="invoice-duedate" value={editedInvoice.createdAt} onChange={handleFormChange}></input>
 
                                 <label htmlFor="payment-terms">Payment Terms</label>
-                                <select name="paymentTerms" id="payment-terms" defaultValue={editedInvoice.paymentTerms} onChange={handleFormChange}>
-                                    <option value="1">Net 1 Days</option>
-                                    <option value="7">Net 7 Days</option>
-                                    <option value="14">Net 14 Days</option>
-                                    <option value="30">Net 30 Days</option>
+                                <select name="paymentTerms" id="payment-terms" value={editedInvoice.paymentTerms} onChange={handleFormChange}>
+                                    <option value={1}>Net 1 Days</option>
+                                    <option value={7}>Net 7 Days</option>
+                                    <option value={14}>Net 14 Days</option>
+                                    <option value={30}>Net 30 Days</option>
                                 </select>
 
                                 <label htmlFor="project-description">Project Description</label>
