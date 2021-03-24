@@ -3,6 +3,8 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './App.scss';
 import invoiceData from "./data.json";
 
+import {deepClone} from "./components/Functionality";
+
 import Menubar from "./components/Menubar";
 import InvoiceMenu from "./components/InvoiceMenu";
 import ListInvoices from "./components/ListInvoices";
@@ -25,10 +27,10 @@ function App() {
   }
 
   function updateInvoice(invoiceid: string, invoicedata: any){
-    let invoices = [...currentInvoiceData];
+    let invoices = deepClone(currentInvoiceData);
     for (let i=0;i<invoices.length;i++){
       if (invoices[i].id === invoiceid){
-        invoices[i] = {...invoicedata};
+        invoices[i] = deepClone(invoicedata);
       }
     }
 
