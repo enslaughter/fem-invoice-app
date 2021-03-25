@@ -32,6 +32,11 @@ function Invoice(props: any){
     const [editOpen, setEditOpen] = useState(true);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [formErrors, setFormErrors]: any = useState({});
+    const [formErrorNotes, setFormErrorNotes]: any = useState({
+        hasEmpty: false,
+        hasInvalid: false,
+        needsItems: false
+    });
 
     function handleFormChange(event: any){
         const propName = event.target.name;
@@ -77,8 +82,15 @@ function Invoice(props: any){
 
         items[key][propName] = value;
         items[key].total = (items[key].quantity * items[key].price);
+
+        let grandtotal = 0;
+        //Update the grand total as well;
+        for (let i=0;i<items.length;i++){
+            grandtotal += items[i].total;
+        }
+
         setEditedInvoice((prevState: any) => {
-            return {...prevState, items: items}
+            return {...prevState, items: items, total: grandtotal}
         })
     }
 
@@ -134,9 +146,29 @@ function Invoice(props: any){
             console.log("Form validated successfully")
             updateInvoiceFull();
         } else {
-            console.log("Error validating form")
+            console.log("Error validating form");
+            processErrorNotes(errors);
+        }       
+    }
+
+    function processErrorNotes(errors: any){
+        for (let property in errors){
+            if (errors[property] === "empty"){
+                setFormErrorNotes((prevState: any) => {
+                    return {...prevState, hasEmpty: true}
+                })
+            }
+            if (errors[property] === "invalid"){
+                setFormErrorNotes((prevState: any) => {
+                    return {...prevState, hasInvalid: true}
+                })
+            }
+            if (errors.noitems){
+                setFormErrorNotes((prevState: any) => {
+                    return {...prevState, needsItems: true}
+                })
+            }
         }
-        
     }
 
     function validateForm(): any{
@@ -200,6 +232,10 @@ function Invoice(props: any){
                     break;
 
                 case "items":
+                    if (editedInvoice[property].length === 0){
+                        errors["noitems"] = true;
+                        break;
+                    }
                     for (let i=0;i<editedInvoice[property].length; i++){
                         for (let itemprop in editedInvoice[property][i]){
                             switch(itemprop){
@@ -280,6 +316,10 @@ function Invoice(props: any){
             "total": 0.00
         })
 
+        setFormErrorNotes((prevState: any) => {
+            return {...prevState, needsItems: false}
+        })
+
         setEditedInvoice((prevState: any) => {
             return{...prevState, items: items}
         })
@@ -293,6 +333,13 @@ function Invoice(props: any){
                 items.push(editedInvoice.items[i])
             }
         }
+
+        if (items.length === 0){
+            setFormErrorNotes((prevState: any) => {
+                return {...prevState, needsItems: true}
+            })
+        }
+
         setEditedInvoice((prevState: any) => {
             return{...prevState, items: items}
         })
@@ -372,10 +419,10 @@ function Invoice(props: any){
                                 <div className="invoice-item--container" key={index} style={index===0 ? (invoiceData.items.length > 1 ? itemStyleFirstMulti : itemStyleFirst) : {}}>
                                     <div>
                                         <p>{invoiceData.items[index].name}</p>
-                                        <p>{`${invoiceData.items[index].quantity} x $ ${invoiceData.items[index].price}`}</p>
+                                        <p>{`${invoiceData.items[index].quantity.toString()} x $ ${invoiceData.items[index].price.toString()}`}</p>
                                     </div>
                                     <div>
-                                        $ {invoiceData.items[index].total.toFixed(2)}
+                                        $ {invoiceData.items[index].total.toString()}
                                     </div>
                                 </div>
                             ))}
@@ -406,58 +453,93 @@ function Invoice(props: any){
                         <form>
                             <p className="form-subheader">Bill From</p>
                                 <div className="form-flexbox">
-                                    <label htmlFor="sender-address">Street Address</label>
+                                    <div className={formErrors.senderstreet ? "form-label labelerror" : "form-label"}>
+                                        <label htmlFor="sender-address">Street Address</label>
+                                        {formErrors.senderstreet && <p>{formErrors.senderstreet === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                    </div>     
                                     <input className={formErrors.senderstreet ? "formerror" : ""} type="text" name="street" id="sender-address" value={editedInvoice.senderAddress.street} onChange={handleFormChange_sender}></input>
 
                                     <div className="form-flexbox--row">
                                         <div>
-                                            <label htmlFor="sender-city">City</label>
+                                            <div className={formErrors.sendercity ? "form-label labelerror" : "form-label"}>
+                                                <label htmlFor="sender-city">City</label>
+                                                {formErrors.sendercity && <p>{formErrors.sendercity === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                            </div>                                            
                                             <input className={formErrors.sendercity ? "formerror" : ""} type="text" name="city" id="sender-city" value={editedInvoice.senderAddress.city} onChange={handleFormChange_sender}></input>
                                         </div>
                                         <div style={{minWidth: "24px", maxWidth: "24px"}}></div>
                                         <div>
-                                            <label htmlFor="sender-postcode">Post Code</label>
+                                            <div className={formErrors.senderpostCode ? "form-label labelerror" : "form-label"}>
+                                                <label htmlFor="sender-postcode">Post Code</label>
+                                                {formErrors.senderpostCode && <p>{formErrors.senderpostCode === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                            </div>                                            
                                             <input className={formErrors.senderpostCode ? "formerror" : ""} type="text" name="postCode" id="sender-postcode" value={editedInvoice.senderAddress.postCode} onChange={handleFormChange_sender}></input>
                                         </div>
                                     </div>
-
-                                    <label htmlFor="sender-country">Country</label>
+                                    <div className={formErrors.sendercountry ? "form-label labelerror" : "form-label"}>
+                                        <label htmlFor="sender-country">Country</label>
+                                        {formErrors.sendercountry && <p>{formErrors.sendercountry === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                    </div> 
                                     <input className={formErrors.sendercountry ? "formerror" : ""} type="text" name="country" id="sender-country" value={editedInvoice.senderAddress.country} onChange={handleFormChange_sender}></input>
                                 </div>
                                 
 
                             <p className="form-subheader">Bill To</p>
                             <div className="form-flexbox">
-                                <label htmlFor="client-name">Client's Name</label>
+                                <div className={formErrors.clientName ? "form-label labelerror" : "form-label"}>
+                                    <label htmlFor="client-name">Client's Name</label>
+                                    {formErrors.clientName && <p>{formErrors.clientName === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                </div> 
                                 <input className={formErrors.clientName ? "formerror" : ""} type="text" name="clientName" id="client-name" value={editedInvoice.clientName} onChange={handleFormChange}></input>
 
-                                <label htmlFor="client-email">Client's Email</label>
+                                <div className={formErrors.clientEmail ? "form-label labelerror" : "form-label"}>
+                                    <label htmlFor="client-email">Client's Email</label>
+                                    {formErrors.clientEmail && <p>{formErrors.clientEmail === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                </div>                                
                                 <input className={formErrors.clientEmail ? "formerror" : ""} type="text" name="clientEmail" id="client-email" value={editedInvoice.clientEmail} onChange={handleFormChange}></input>
 
-                                <label htmlFor="client-address">Street Address</label>
+                                <div className={formErrors.clientstreet ? "form-label labelerror" : "form-label"}>
+                                    <label htmlFor="client-address">Street Address</label>
+                                    {formErrors.clientstreet && <p>{formErrors.clientstreet === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                </div>                               
                                 <input className={formErrors.clientstreet ? "formerror" : ""} type="text" name="street" id="client-address" value={editedInvoice.clientAddress.street} onChange={handleFormChange_client}></input>
 
                                 <div className="form-flexbox--row">
                                     <div>
-                                        <label htmlFor="client-city">City</label>
+                                        <div className={formErrors.clientcity ? "form-label labelerror" : "form-label"}>
+                                            <label htmlFor="client-city">City</label>
+                                            {formErrors.clientcity && <p>{formErrors.clientcity === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                        </div> 
                                         <input className={formErrors.clientcity ? "formerror" : ""} type="text" name="city" id="client-city" value={editedInvoice.clientAddress.city} onChange={handleFormChange_client}></input>
                                     </div>
                                     <div style={{minWidth: "24px", maxWidth: "24px"}}></div>
                                     <div>
-                                        <label htmlFor="client-postcode">Post Code</label>
+                                        <div className={formErrors.clientpostCode ? "form-label labelerror" : "form-label"}>
+                                            <label htmlFor="client-postcode">Post Code</label>
+                                            {formErrors.clientpostCode && <p>{formErrors.clientpostCode === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                        </div> 
                                         <input className={formErrors.clientpostCode ? "formerror" : ""} type="text" name="postCode" id="client-postcode" value={editedInvoice.clientAddress.postCode} onChange={handleFormChange_client}></input>
                                     </div>
                                 </div>
-                                                           
-                                <label htmlFor="client-country">Country</label>
+
+                                <div className={formErrors.clientcountry ? "form-label labelerror" : "form-label"}>
+                                    <label htmlFor="client-country">Country</label>
+                                    {formErrors.clientcountry && <p>{formErrors.clientcountry === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                </div>                                                    
                                 <input className={formErrors.clientcountry ? "formerror" : ""} type="text" name="country" id="client-country" value={editedInvoice.clientAddress.country} onChange={handleFormChange_client}></input>
                             </div>
                                 
                             <div className="form-flexbox">
-                                <label htmlFor="invoice-duedate">Invoice Date</label>
+                                <div className={formErrors.createdAt ? "form-label labelerror" : "form-label"}>
+                                    <label htmlFor="invoice-duedate">Invoice Date</label>
+                                    {formErrors.createdAt && <p>{formErrors.createdAt === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                </div>                                 
                                 <input type="date" name="createdAt" id="invoice-duedate" value={editedInvoice.createdAt} onChange={handleFormChange}  disabled={invoiceStatus!=="draft"}></input>
 
-                                <label htmlFor="payment-terms">Payment Terms</label>
+                                <div className={formErrors.paymentTerms ? "form-label labelerror" : "form-label"}>
+                                    <label htmlFor="payment-terms">Payment Terms</label>
+                                    {formErrors.paymentTerms && <p>{formErrors.paymentTerms === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                </div>                             
                                 <select className={formErrors.paymentTerms ? "formerror" : ""} name="paymentTerms" id="payment-terms" value={editedInvoice.paymentTerms} onChange={handleFormChange}>
                                     <option value={1}>Net 1 Days</option>
                                     <option value={7}>Net 7 Days</option>
@@ -465,7 +547,10 @@ function Invoice(props: any){
                                     <option value={30}>Net 30 Days</option>
                                 </select>
 
-                                <label htmlFor="project-description">Project Description</label>
+                                <div className={formErrors.description ? "form-label labelerror" : "form-label"}>
+                                    <label htmlFor="project-description">Project Description</label>
+                                    {formErrors.description && <p>{formErrors.description === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                </div>                              
                                 <input className={formErrors.description ? "formerror" : ""} type="text" name="description" id="project-description" value={editedInvoice.description} onChange={handleFormChange}></input>
                             </div>
                             
@@ -473,16 +558,19 @@ function Invoice(props: any){
                             <div className="form-flexbox">
                                 {editedInvoice.items.map((item: any, key: any) => (
                                     <div key={key} style={{width: "100%"}}>
-                                        <label className="form-item-label" htmlFor={`invoice-item-${item.name}`}>Item Name</label>
+                                        <div className={formErrors[`item${key}name`] ? "form-label labelerror" : "form-label"}>
+                                            <label className="form-item-label" htmlFor={`invoice-item-${item.name}`}>Item Name</label>
+                                            {formErrors[`item${key}name`] && <p>{formErrors[`item${key}name`] === "empty" ? "can't be empty" : "invalid input"}</p>}
+                                        </div>                                       
                                         <input className={formErrors[`item${key}name`] ? "formerror" : ""} type="text" name="name" id={`invoice-item-${item.name}`} data-key={key} value={item.name} onChange={handleFormChange_items}></input>
 
                                         <div className="form-flexbox--invoiceitems">
                                             <div>
-                                                <label htmlFor={`quantity-${key+1}`}>Qty.</label>
+                                                <label htmlFor={`quantity-${key+1}`} style={formErrors[`item${key}quantity`] && {color: "hsl(0, 80%, 63%)"}}>Qty.</label>
                                                 <input className={formErrors[`item${key}quantity`] ? "formerror" : ""} type="text" name="quantity" id={`quantity-${key+1}`} data-key={key} value={item.quantity} maxLength={2} size={1} onChange={handleFormChange_items} onBlur={handleQuantityOut}></input>
                                             </div>
                                             <div>
-                                                <label htmlFor={`price-${key+1}`}>Price</label>
+                                                <label htmlFor={`price-${key+1}`} style={formErrors[`item${key}price`] && {color: "hsl(0, 80%, 63%)"}}>Price</label>
                                                 <input className={formErrors[`item${key}price`] ? "formerror" : ""} type="text" name="price" id={`price-${key+1}`} data-key={key} value={item.price} maxLength={8} size={4} onChange={handleFormChange_items} onBlur={handlePriceOut}></input>
                                             </div>
                                             <div>
@@ -501,6 +589,12 @@ function Invoice(props: any){
                             
                             <div className="form-newitem">
                                 <button type="button" onClick={addInvoiceItem}>+ Add New Item</button> 
+                            </div>
+
+                            <div className="form-errors-footer">
+                                {formErrorNotes.hasEmpty && <p>- All fields must be added</p>}
+                                {formErrorNotes.hasInvalid && <p>- All fields must be valid</p>}
+                                {formErrorNotes.needsItems && <p>- An item must be added</p>}
                             </div>
                             
                             <div className="edit-modal-buttons">

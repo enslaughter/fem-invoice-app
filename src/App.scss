@@ -469,6 +469,23 @@ label {
   display: inline-block;
 }
 
+.form-label {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &.labelerror {
+    color: hsl(0, 80%, 63%);
+    font-size: 10px;
+    font-weight: 600;
+
+    label {
+      color: hsl(0, 80%, 63%);
+    }
+  }
+}
+
 input,
 select {
   margin-bottom: 24px;
@@ -549,6 +566,14 @@ select {
       background-color: hsl(231, 75, 93);
     }
   }
+}
+
+.form-errors-footer {
+  color: hsl(0, 80%, 63%);
+  font-weight: 600;
+  font-size: 10px;
+  margin-top: 32px;
+  margin-bottom: 44px;
 }
 
 .edit-modal-buttons {
