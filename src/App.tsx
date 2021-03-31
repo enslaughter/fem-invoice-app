@@ -27,6 +27,7 @@ function App() {
   }
 
   function updateInvoice(invoiceid: string, invoicedata: any){
+    console.log(JSON.stringify(invoicedata))
     let invoices = deepClone(currentInvoiceData);
     for (let i=0;i<invoices.length;i++){
       if (invoices[i].id === invoiceid){
@@ -41,7 +42,7 @@ function App() {
     let invoices = [];
     for (let i=0;i<currentInvoiceData.length; i++){
       if (currentInvoiceData[i].id!==invoiceid){
-        invoices.push(currentInvoiceData[i]);
+        invoices.push(deepClone(currentInvoiceData[i]));
       }
     }
     setCurrentInvoiceData(invoices);
@@ -70,11 +71,11 @@ function App() {
       <Menubar />
         <Switch>
           <Route path="/" exact>
-            <InvoiceMenu />
+            <InvoiceMenu invoiceCount={currentInvoiceData.length}/>
             <ListInvoices data={currentInvoiceData}/>
           </Route>
           <Route path="/invoice/:invoiceid" exact>
-            <Invoice lookupInvoice={lookupInvoice} updateInvoice={updateInvoice} setModalOpen={setModalOpen}/>
+            <Invoice lookupInvoice={lookupInvoice} updateInvoice={updateInvoice} deleteInvoice={deleteInvoice} setModalOpen={setModalOpen}/>
           </Route>
           <Route path="/invoice/:invoiceid/edit">
             <Edit lookupInvoice={lookupInvoice}/>

@@ -82,6 +82,10 @@ button {
 
 //Menubar
 
+.App {
+  min-height: 100%;
+}
+
 .menubar,
 .menu-right {
   display: flex;
@@ -401,7 +405,9 @@ button {
   }
 }
 
-// EDIT INVOICE SECTION
+//============================================================
+//================== EDIT INVOICE SECTION ====================
+//============================================================
 
 .edit-invoice-container {
   position: fixed;
@@ -429,6 +435,7 @@ select {
   outline-color: transparent;
   border: 1px solid hsl(231, 75, 93);
   font-weight: 700;
+  font-family: inherit;
   border-radius: 4px;
   padding: 16px 20px;
 
@@ -441,6 +448,10 @@ select {
     border-color: hsl(0, 80%, 63%);
   }
 }
+
+//A small note about the above select stlying, and the arrow that appears for the dropdown on Chrome;
+//Because of inconsistent browser stylings, it would require a custom-made select element which is
+//outside of the scope of this project. It also requires some finer accessibility considerations
 
 .form-header {
   font-size: 24px;
@@ -550,6 +561,17 @@ select {
   margin-bottom: 24px;
 }
 
+.form-item-total {
+  &:disabled {
+    color: hsl(231, 20, 61);
+    font-weight: 700;
+    padding-left: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+}
+
 .form-newitem {
   display: flex;
   align-items: center;
@@ -579,6 +601,41 @@ select {
 .edit-modal-buttons {
   background-color: white;
   padding: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.invoice-delete-modal-container {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 15;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.invoice-delete-modal {
+  background-color: white;
+  padding: 32px;
+  border-radius: 8px;
+}
+
+.invoice-delete-header {
+  color: $midnight;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.invoice-delete-buttons {
+  margin-top: 24px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

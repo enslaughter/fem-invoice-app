@@ -1,4 +1,4 @@
-
+import InvoiceMenu from "../components/InvoiceMenu";
 
 function Home(){
     return(
