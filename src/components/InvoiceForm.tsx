@@ -8,6 +8,9 @@ import {deepClone, useWindowSize} from "../components/Functionality";
 function InvoiceForm(props: any){
 //Props needed: editOpen, closeEditModal, updateInvoiceFull
 
+    const windowSize: any = useWindowSize();
+    console.log(windowSize.width, windowSize.height, windowSize.pageHeight);
+
     const [editedInvoice, setEditedInvoice] = useState(deepClone(props.invoiceData));
     const [formErrors, setFormErrors]: any = useState({});
     const [formErrorNotes, setFormErrorNotes]: any = useState({
@@ -140,6 +143,7 @@ function InvoiceForm(props: any){
         if (Object.keys(errors).length === 0){
             //console.log("Form validated successfully")
             props.updateInvoiceFull(editedInvoice);
+            setFormErrorNotes({});
         } else {
             //console.log("Error validating form");
             processErrorNotes(errors);
@@ -334,13 +338,16 @@ function InvoiceForm(props: any){
     }
 
     return(
-        <div className="edit-invoice-container" style={props.editOpen ? {display: "block"} : {display: "none"}}>
-                    <div className="edit-invoice-modal">
-                        <button className="invoice-goback" onClick={handleCloseModal} style={{margin: "32px 0 24px 0"}}>
-                            <img src={backarrow} alt="" style={{marginRight: "24px"}}></img>Go Back
-                        </button>
-                        <p className="form-header">Edit <span className="form-header--id">#</span>{editedInvoice.id}</p>
-                        <form>
+        <div className="edit-invoice-container" style={props.editOpen ? {visibility: "visible"} : {visibility: "hidden"}}>
+                    <div className="edit-invoice-modal" style={props.editOpen ? {transform: "translateX(0%)"} : {transform: "translateX(-100%)"}}>
+                        <div style={{padding: "24px"}}>
+                            <button className="invoice-goback" onClick={handleCloseModal} style={{margin: "32px 0 24px 0"}}>
+                                <img src={backarrow} alt="" style={{marginRight: "24px"}}></img>Go Back
+                            </button>
+                            <p className="form-header">Edit <span className="form-header--id">#</span>{editedInvoice.id}</p>
+                        </div>
+                        
+                        <form style={windowSize.width > 0 ? {maxHeight: `${windowSize.height - 346}px`} : {}}>
                             <p className="form-subheader">Bill From</p>
                                 <div className="form-flexbox">
                                     <div className={formErrors.senderstreet ? "form-label labelerror" : "form-label"}>
@@ -486,13 +493,16 @@ function InvoiceForm(props: any){
                                 {formErrorNotes.hasInvalid && <p>- All fields must be valid</p>}
                                 {formErrorNotes.needsItems && <p>- An item must be added</p>}
                             </div>
-                            
-                            <div className="edit-modal-buttons">
-                                <button className="invoice-app--button button-edit-cancel" type="button" onClick={handleCloseModal}>Cancel</button>
-                                {editedInvoice.status === "draft" && <button className="invoice-app--button button-savedraft" style={{marginLeft: "8px"}} type="button" onClick={submitDraft}>Save as Draft</button>}
-                                <button className="invoice-app--button button-savechanges" style={{marginLeft: "8px"}} type="button" onClick={submitForm}>Save Changes</button>
-                            </div>
                         </form>
+                            <div style={{position: "relative", backgroundColor: "transparent"}}>
+                                <div className="edit-modal-gradientfooter"></div>
+                                <div className="edit-modal-buttons">
+                                    <button className="invoice-app--button button-edit-cancel" type="button" onClick={handleCloseModal}>Cancel</button>
+                                    {editedInvoice.status === "draft" && <button className="invoice-app--button button-savedraft" style={{marginLeft: "8px"}} type="button" onClick={submitDraft}>Save as Draft</button>}
+                                    <button className="invoice-app--button button-savechanges" style={{marginLeft: "8px"}} type="button" onClick={submitForm}>Save Changes</button>
+                                </div>
+                            </div>
+                            
                         
                     </div>
                 </div>
