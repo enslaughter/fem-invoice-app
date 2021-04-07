@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 
 import backarrow from "../assets/icon-arrow-left.svg";
 import icondelete from "../assets/icon-delete.svg"
@@ -18,6 +18,12 @@ function InvoiceForm(props: any){
         hasInvalid: false,
         needsItems: false
     });
+
+    useEffect(() => {
+        return function cleanup(){
+            setEditedInvoice(deepClone(props.invoiceData));
+        }
+    }, [props.invoiceData]);
 
     function handleFormChange(event: any){
         const propName = event.target.name;
@@ -338,8 +344,8 @@ function InvoiceForm(props: any){
     }
 
     return(
-        <div className="edit-invoice-container" style={props.editOpen ? {visibility: "visible"} : {visibility: "hidden"}}>
-                    <div className="edit-invoice-modal" style={props.editOpen ? {transform: "translateX(0%)"} : {transform: "translateX(-100%)"}}>
+        <div className="edit-invoice-container" style={props.editOpen ? {visibility: "visible", backgroundColor: "rgba(0, 0, 0, 0.5)"} : {visibility: "hidden", backgroundColor: "transparent"}}>
+                    <div className="edit-invoice-modal" style={props.editOpen ? {transform: "translateX(0%)"} : {transform: "translateX(-100%) translateX(-72px)"}}>
                         <div style={{padding: "24px"}}>
                             <button className="invoice-goback" onClick={handleCloseModal} style={{margin: "32px 0 24px 0"}}>
                                 <img src={backarrow} alt="" style={{marginRight: "24px"}}></img>Go Back

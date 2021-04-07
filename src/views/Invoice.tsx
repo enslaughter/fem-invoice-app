@@ -33,10 +33,10 @@ function Invoice(props: any){
 
     function updateInvoiceStatus(newStatus: string){
         setInvoiceStatus(newStatus)
-        setInvoiceData((prevState: any) => {
-            return {...prevState, status: newStatus}
-        })
-        props.updateInvoice(invoiceData);
+        let statInvoice = deepClone(invoiceData);
+        statInvoice.status = newStatus;
+        setInvoiceData(statInvoice)
+        props.updateInvoice(statInvoice.id, statInvoice);
     }
 
     function updateInvoiceFull(newInvoice: any){
@@ -149,7 +149,7 @@ function Invoice(props: any){
                 <InvoiceForm editOpen={editOpen} closeEditModal={closeEditModal} invoiceData={invoiceData} updateInvoiceFull={updateInvoiceFull}/>
 
                 {/* CANCEL CONFIRMATION MODAL SECTION */}
-                <div className="invoice-delete-modal-container" style={deleteOpen ? {height: `${windowSize.pageHeight}px`, display: "flex"} : {display: "none"}}>
+                <div className="invoice-delete-modal-container" style={deleteOpen ? {width: `${windowSize.width}`,height: `${windowSize.height}px`, visibility: "visible"} : {width: `${windowSize.width}`, height: `${windowSize.pageHeight}px`,visibility: "hidden"}}>
                     <div className="invoice-delete-modal">
                         <p className="invoice-delete-header">Confirm Deletion</p>
                         <p>{`Are you sure you want to delete invoice #${invoiceData.id}? This action cannot be undone.`}</p>

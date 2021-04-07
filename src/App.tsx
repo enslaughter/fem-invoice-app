@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './App.scss';
 import invoiceData from "./data.json";
 
-import {deepClone} from "./components/Functionality";
+import {deepClone, useWindowSize} from "./components/Functionality";
 
 import Menubar from "./components/Menubar";
 import InvoiceMenu from "./components/InvoiceMenu";
@@ -15,6 +15,7 @@ function App() {
 
   const [currentInvoiceData, setCurrentInvoiceData] = useState(invoiceData);
   const [modalOpen, setModalOpen] = useState(false);
+  const windowSize: any = useWindowSize();
 
   function lookupInvoice(invoiceid: string){
     for (let i=0;i<currentInvoiceData.length;i++){
@@ -65,25 +66,28 @@ function App() {
   }
 
   return (
-    <div className="App" style={modalOpen ? {position: "fixed", width: "100%"} : {position: "static"}}>
+    <div className="App">
+    {/* style={modalOpen ? {position: "fixed", width: "100%"} : {position: "static"}} */}
       
       <Router>
       <Menubar />
+      <div className="app-body" style={windowSize.width > 620 ? {height: `${windowSize.height}px`, width: `${windowSize.width-72}px`} : {height: `${windowSize.height - 72}px`, width: `${windowSize.width}px`}}>
         <Switch>
-          <Route path="/" exact>
-            <InvoiceMenu invoiceCount={currentInvoiceData.length}/>
-            <ListInvoices data={currentInvoiceData}/>
-          </Route>
-          <Route path="/invoice/:invoiceid" exact>
-            <Invoice lookupInvoice={lookupInvoice} updateInvoice={updateInvoice} deleteInvoice={deleteInvoice} setModalOpen={setModalOpen}/>
-          </Route>
-          <Route path="/invoice/:invoiceid/edit">
-            <Edit lookupInvoice={lookupInvoice}/>
-          </Route>
-          <Route>
-              <h1>ERROR: Page not found!</h1>
-          </Route>
-        </Switch>
+            <Route path="/" exact>
+              <InvoiceMenu invoiceCount={currentInvoiceData.length}/>
+              <ListInvoices data={currentInvoiceData}/>
+            </Route>
+            <Route path="/invoice/:invoiceid" exact>
+              <Invoice lookupInvoice={lookupInvoice} updateInvoice={updateInvoice} deleteInvoice={deleteInvoice} setModalOpen={setModalOpen}/>
+            </Route>
+            <Route path="/invoice/:invoiceid/edit">
+              <Edit lookupInvoice={lookupInvoice}/>
+            </Route>
+            <Route>
+                <h1>ERROR: Page not found!</h1>
+            </Route>
+          </Switch>
+        </div>
       </Router>
       
     </div>

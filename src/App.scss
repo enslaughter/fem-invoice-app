@@ -97,6 +97,24 @@ button {
 .menubar {
   background-color: hsl(231, 20%, 27%);
   width: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+}
+
+@media all and (min-width: 620px) {
+  .menubar {
+    height: 100%;
+    width: 72px;
+    left: 0;
+    flex-direction: column;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .menu-right {
+    flex-direction: column;
+  }
 }
 
 .menu-logo {
@@ -146,11 +164,32 @@ button {
   align-items: center;
 }
 
+@media all and (min-width: 620px) {
+  .menu-button-profile--container {
+    border-left: none;
+    border-top: 1px solid hsla(231, 20, 36, 1);
+    padding: 0px 14px;
+  }
+}
+
 .menu-button-profile {
   img {
     width: 32px;
     height: 32px;
     border-radius: 16px;
+  }
+}
+
+.app-body {
+  position: fixed;
+  overflow-y: scroll;
+  margin-top: 72px;
+}
+
+@media all and (min-width: 620px) {
+  .app-body {
+    margin-top: 0;
+    left: 72px;
   }
 }
 
@@ -418,8 +457,14 @@ button {
   z-index: 11;
   background-color: rgba(0, 0, 0, 0.5);
 
-  transition-property: visibility;
-  transition-duration: 1s;
+  transition: visibility 1s, background-color 1s;
+}
+
+@media all and (min-width: 620px) {
+  .edit-invoice-container {
+    top: 0px;
+    left: 72px;
+  }
 }
 
 .edit-invoice-modal {
@@ -653,12 +698,13 @@ select {
 }
 
 .invoice-delete-modal-container {
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: 0px;
   width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 15;
+  z-index: 150;
 
   display: flex;
   flex-direction: row;
