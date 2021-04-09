@@ -104,7 +104,10 @@ function InvoiceMenu(props: any) {
             </div>
           </div>
         </div>
-        <NewInvoice setAddOpen={props.setAddOpen} />
+        <NewInvoice
+          setAddOpen={props.setAddOpen}
+          setFiltersOpen={setFiltersOpen}
+        />
       </div>
     </div>
   );

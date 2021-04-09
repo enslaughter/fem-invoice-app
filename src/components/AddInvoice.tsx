@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import backarrow from "../assets/icon-arrow-left.svg";
 import icondelete from "../assets/icon-delete.svg";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useMediaPredicate } from "react-media-hook";
 import "./App.scss";
@@ -39,7 +39,6 @@ function App() {
   }
 
   function updateInvoice(invoiceid: string, invoicedata: any) {
-    console.log(JSON.stringify(invoicedata));
     let invoices = deepClone(currentInvoiceData);
     for (let i = 0; i < invoices.length; i++) {
       if (invoices[i].id === invoiceid) {
@@ -65,7 +64,6 @@ function App() {
     setCurrentInvoiceData((prevInvoices) => {
       return [...prevInvoices, newinvoicedata];
     });
-    filterInvoices(filters);
   }
 
   function generateInvoiceID() {
@@ -73,7 +71,6 @@ function App() {
     id += String.fromCharCode(65 + Math.floor(Math.random() * 26));
     id += String.fromCharCode(65 + Math.floor(Math.random() * 26));
     id += Math.floor(Math.random() * 10000).toString();
-    console.log("Generated new ID :" + id);
     currentInvoiceData.forEach((invoice) => {
       if (id === invoice.id) {
         id = generateInvoiceID();
@@ -98,6 +95,23 @@ function App() {
     setFilteredInvoices(newFilteredInvoices);
   }
 
+  function getFilteredInvoices(filterData: any) {
+    let newFilteredInvoices: any = [];
+    filterData = deepClone(filters);
+
+    currentInvoiceData.forEach((invoice) => {
+      for (let filter in filterData) {
+        if (filterData[filter] === true) {
+          if (invoice["status"] == filter) {
+            newFilteredInvoices.push(deepClone(invoice));
+          }
+        }
+      }
+    });
+
+    return newFilteredInvoices;
+  }
+
   function updateFilterData(newFilters: any) {
     setFilters(newFilters);
     filterInvoices(newFilters);
@@ -108,8 +122,10 @@ function App() {
   }
 
   function addInvoiceFull(newInvoice: any) {
+    setAddOpen(false);
     newInvoice.id = generateInvoiceID();
     addInvoice(newInvoice);
+    filterInvoices(filters);
   }
 
   return (
@@ -139,7 +155,12 @@ function App() {
                 updateFilterData={updateFilterData}
                 setAddOpen={setAddOpen}
               />
-              <ListInvoices data={filteredInvoices} />
+              <ListInvoices
+                data={filteredInvoices}
+                currentInvoiceData={currentInvoiceData}
+                currentFilters={filters}
+                getFilteredInvoices={getFilteredInvoices}
+              />
               <AddInvoice
                 editOpen={addOpen}
                 closeEditModal={closeAddModal}

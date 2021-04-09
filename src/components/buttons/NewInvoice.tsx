@@ -5,6 +5,7 @@ function NewInvoice(props: any) {
   let windowSize: any = useWindowSize();
 
   function handleNewInvoice() {
+    props.setFiltersOpen(false);
     props.setAddOpen(true);
   }
   return (

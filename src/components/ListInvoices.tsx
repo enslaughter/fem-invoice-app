@@ -2,7 +2,9 @@ import InvoiceCard from "./InvoiceCard";
 import NoInvoices from "../assets/illustration-empty.svg";
 
 function ListInvoices(props: any) {
-  if (!props.data) {
+  let filteredData = props.getFilteredInvoices(props.filters);
+
+  if (!filteredData) {
     return <div>No data to display!</div>;
   } else if (Object.keys(props.data).length === 0) {
     return (
@@ -21,7 +23,7 @@ function ListInvoices(props: any) {
   } else {
     return (
       <div className="invoice-list-container">
-        {props.data.map((invoice: any, id: any) => (
+        {filteredData.map((invoice: any, id: any) => (
           <InvoiceCard data={invoice} key={id} />
         ))}
       </div>
