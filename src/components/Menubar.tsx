@@ -1,11 +1,18 @@
 import logo from "../assets/logo.svg";
 import {ReactComponent as IconMoon} from "../assets/icon-moon.svg";
-// import iconsun from "../assets/icon-sun.svg";
+import {ReactComponent as IconSun} from "../assets/icon-sun.svg";
 import avatar from "../assets/image-avatar.jpg";
 
 import {Link} from "react-router-dom";
 
-function Menubar(){
+function Menubar(props: any){
+    function toggleTheme(){
+        if(props.theme === "dark"){
+            props.setTheme("light");
+        } else {
+            props.setTheme("dark");
+        }
+    }
     return(
         <div className="menubar">
             <Link to="/">
@@ -18,8 +25,8 @@ function Menubar(){
             </Link>
             
             <div className="menu-right">
-                <button className="menu-button-nightmode">
-                    <IconMoon className="menu-theme-icon"/>
+                <button className="menu-button-nightmode" onClick={toggleTheme}>
+                    {props.theme === "dark" ? <IconSun className="menu-theme-icon"/> : <IconMoon className="menu-theme-icon"/>}
                 </button>
                 <div className="menu-button-profile--container">
                 <button className="menu-button-profile">

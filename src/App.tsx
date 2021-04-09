@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {useMediaPredicate} from "react-media-hook";
 import './App.scss';
 import invoiceData from "./data.json";
 
@@ -14,8 +15,15 @@ import Edit from "./views/Edit";
 function App() {
 
   const [currentInvoiceData, setCurrentInvoiceData] = useState(invoiceData);
+  const [filteredInvoices, setFilteredInvoices] = useState(invoiceData);
+  const [theme, setTheme] = useState(useMediaPredicate("(prefers-color-scheme: dark)") ? "dark" : "light");
   const [modalOpen, setModalOpen] = useState(false);
   const windowSize: any = useWindowSize();
+  const [filters, setFilters] = useState({
+    draft: true,
+    pending: true,
+    paid: true
+});
 
   function lookupInvoice(invoiceid: string){
     for (let i=0;i<currentInvoiceData.length;i++){
@@ -65,17 +73,38 @@ function App() {
     return id;
   }
 
+  function filterInvoices(filterData: any){
+    let newFilteredInvoices: any = [];
+
+    currentInvoiceData.forEach(invoice => {
+      for (let filter in filterData){
+        if(filterData[filter]===true){
+          if (invoice["status"] == filter){
+            newFilteredInvoices.push(deepClone(invoice));
+          }
+        }
+      }
+    })
+
+    setFilteredInvoices(newFilteredInvoices);
+  }
+
+  function updateFilterData(newFilters: any){
+    setFilters(newFilters);
+    filterInvoices(newFilters);
+  }
+
   return (
-    <div className="App">
+    <div className="App" data-theme={theme}>
     {/* style={modalOpen ? {position: "fixed", width: "100%"} : {position: "static"}} */}
       
       <Router>
-      <Menubar />
+      <Menubar setTheme={setTheme} theme={theme}/>
       <div className="app-body" style={windowSize.width > 620 ? {height: `${windowSize.height}px`, width: `${windowSize.width-72}px`} : {height: `${windowSize.height - 72}px`, width: `${windowSize.width}px`}}>
         <Switch>
             <Route path="/" exact>
-              <InvoiceMenu invoiceCount={currentInvoiceData.length}/>
-              <ListInvoices data={currentInvoiceData}/>
+              <InvoiceMenu invoiceCount={currentInvoiceData.length} updateFilterData={updateFilterData}/>
+              <ListInvoices data={filteredInvoices}/>
             </Route>
             <Route path="/invoice/:invoiceid" exact>
               <Invoice lookupInvoice={lookupInvoice} updateInvoice={updateInvoice} deleteInvoice={deleteInvoice} setModalOpen={setModalOpen}/>

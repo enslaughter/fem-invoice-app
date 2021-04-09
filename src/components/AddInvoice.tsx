@@ -349,6 +349,7 @@ function AddInvoice(props: any){
                                     </div>     
                                     <input className={formErrors.senderstreet ? "formerror" : ""} type="text" name="street" id="sender-address" value={editedInvoice.senderAddress.street} onChange={handleFormChange_sender}></input>
 
+                                    <div className="form-flexbox--desktop-row">
                                     <div className="form-flexbox--row">
                                         <div>
                                             <div className={formErrors.sendercity ? "form-label labelerror" : "form-label"}>
@@ -371,6 +372,8 @@ function AddInvoice(props: any){
                                         {formErrors.sendercountry && <p>{formErrors.sendercountry === "empty" ? "can't be empty" : "invalid input"}</p>}
                                     </div> 
                                     <input className={formErrors.sendercountry ? "formerror" : ""} type="text" name="country" id="sender-country" value={editedInvoice.senderAddress.country} onChange={handleFormChange_sender}></input>
+                                    </div>
+                                    
                                 </div>
                                 
 

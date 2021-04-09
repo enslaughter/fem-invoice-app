@@ -86,6 +86,10 @@ button {
   min-height: 100%;
 }
 
+//This is absolute chaos but its slightly better than changing things in 200 places
+.App[data-theme="dark"] {
+}
+
 .menubar,
 .menu-right {
   display: flex;
@@ -229,13 +233,102 @@ button {
   justify-content: space-between;
   margin: 32px 24px;
 
+  .invoice-menu-left {
+    display: flex;
+    flex-direction: column;
+    h1 {
+      font-size: 20px;
+      line-height: 22px;
+      margin: 0;
+      margin-bottom: 4px;
+    }
+    p {
+      font-weight: 500;
+      font-size: 12px;
+      color: hsl(231, 20, 61);
+    }
+  }
+
   .invoice-menu-right {
     display: flex;
     flex-direction: row;
+    button {
+      .downarrow {
+        margin-left: 1em;
+        margin-right: 18px;
+      }
+    }
+  }
+}
+
+.invoice-menu-filters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & button:hover {
+    color: $blue;
+  }
+}
+
+.invoice-menu-filters-popup {
+  position: absolute;
+  z-index: 15;
+  padding: 24px;
+  width: inherit;
+  transform: translateY(96px);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
+}
+
+.filter-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  input {
+    display: inline-block;
+    margin: 0;
+    margin-right: 13px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  label {
+    display: inline-block;
+    color: $midnight;
+    font-weight: 700;
+    margin: 0;
+    padding-top: 2px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
 //INVOICE CARDS
+
+.noinvoice-container {
+  height: calc(100% - 200px);
+  margin: 0px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  div > h3 {
+    text-align: center;
+    font-size: 20px;
+    line-height: 22px;
+  }
+  div > p {
+    text-align: center;
+    font-weight: 500;
+    line-height: 15px;
+    color: hsl(231, 20, 61);
+  }
+}
 
 .invoice-card {
   background-color: white;
@@ -615,6 +708,49 @@ select {
   }
 }
 
+.form-flexbox--desktop-row {
+  width: 100%;
+}
+
+@media all and (min-width: 620px) {
+  .form-flexbox--desktop-row {
+    display: flex;
+    flex-direction: row;
+
+    & > div:nth-child(1) {
+      flex-basis: 65%;
+    }
+
+    & > div:nth-child(2) {
+      margin-left: 24px;
+      flex-basis: 35%;
+    }
+  }
+}
+
+.form-flexbox--desktop-datebox {
+  width: 100%;
+}
+
+@media all and (min-width: 620px) {
+  .form-flexbox--desktop-datebox {
+    display: flex;
+    flex-direction: row;
+
+    div {
+      flex-basis: 50%;
+    }
+
+    & > div:nth-child(1) {
+      margin-right: 12px;
+    }
+
+    & > div:nth-child(2) {
+      margin-left: 12px;
+    }
+  }
+}
+
 .form-flexbox--invoiceitems {
   display: flex;
   flex-direction: row;
@@ -626,6 +762,20 @@ select {
 
   & label {
     display: inline-block;
+  }
+}
+
+.form-flexbox--desktop-items {
+}
+
+@media all and (min-width: 620px) {
+  .form-flexbox--desktop-items {
+    display: flex;
+    flex-direction: row;
+
+    & div:nth-child(1) {
+      margin-right: 24px;
+    }
   }
 }
 

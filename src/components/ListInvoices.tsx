@@ -1,4 +1,5 @@
 import InvoiceCard from "./InvoiceCard";
+import NoInvoices from "../assets/illustration-empty.svg";
 
 function ListInvoices(props: any){
     if (!props.data){
@@ -7,7 +8,18 @@ function ListInvoices(props: any){
                 No data to display!
             </div>
         )
-    } else {
+    } else if (Object.keys(props.data).length === 0){
+        return (
+            <div className="noinvoice-container">
+                <img src={NoInvoices} alt=""></img>
+                <div>
+                    <h3>There is nothing here</h3>
+                    <p>Create an invoice by clicking on the <span style={{fontWeight: 700}}>New Invoice</span> button and get started</p>
+                </div>
+            </div>
+        )
+    }
+    else {
         return(
             <div>
                 {props.data.map((invoice: any, id: any) => (
