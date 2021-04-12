@@ -10,7 +10,7 @@ import { deepClone, useWindowSize } from "../components/Functionality";
 import InvoiceForm from "../components/InvoiceForm";
 
 function Invoice(props: any) {
-  const windowSize = useWindowSize();
+  const windowSize: any = useWindowSize();
   const history = useHistory();
 
   interface ParamTypes {
@@ -66,7 +66,14 @@ function Invoice(props: any) {
 
   if (invoiceData !== null) {
     return (
-      <div style={{ minHeight: "100%" }}>
+      <div
+        className="invoice-container"
+        style={
+          windowSize.width > 620
+            ? { height: `${windowSize.height - 32}px`, position: "relative" }
+            : {}
+        }
+      >
         <Link to="/">
           <div className="invoice-goback">
             <img src={backarrow} alt="" style={{ marginRight: "24px" }}></img>Go
@@ -74,16 +81,40 @@ function Invoice(props: any) {
           </div>
         </Link>
         <div className="invoice-main-status">
-          Status
-          <InvoiceStatus status={invoiceStatus} />
+          <div className="invoice-main-status-left">
+            <p style={{ marginRight: "16px" }}>Status</p>
+            <InvoiceStatus status={invoiceStatus} />
+          </div>
+          {windowSize.width > 620 && (
+            <div className="invoice-edit-desktop">
+              <button
+                className="invoice-app--button edit"
+                onClick={openEditModal}
+              >
+                Edit
+              </button>
+              <button
+                className="invoice-app--button delete"
+                style={
+                  invoiceData.status === "pending"
+                    ? { margin: "0px 8px" }
+                    : { marginLeft: "8px" }
+                }
+                onClick={() => setDeleteOpen(true)}
+              >
+                Delete
+              </button>
+              {invoiceData.status === "pending" && (
+                <MarkPaid updateInvoiceStatus={updateInvoiceStatus} />
+              )}
+            </div>
+          )}
         </div>
 
         <div className="invoice-info">
           <span className="invoice-card--id">
             <span>#</span>
-            <span style={{ color: "black", fontWeight: "bold" }}>
-              {invoiceData.id}
-            </span>
+            <span className="invoice-card--id-num">{invoiceData.id}</span>
           </span>
           <p className="invoice-info--descripton">{invoiceData.description}</p>
           <div className="invoice-info--senderaddress">
@@ -154,7 +185,9 @@ function Invoice(props: any) {
                 >
                   <div>
                     <p>{invoiceData.items[index].name}</p>
-                    <p>{`${invoiceData.items[index].quantity} x $ ${
+                    <p className="invoice-item--quantityline">{`${
+                      invoiceData.items[index].quantity
+                    } x $ ${
                       typeof invoiceData.items[index].price === "number"
                         ? invoiceData.items[index].price.toFixed(2)
                         : invoiceData.items[index].price
@@ -176,25 +209,30 @@ function Invoice(props: any) {
           </div>
         </div>
 
-        <div className="invoice-edit">
-          <button className="invoice-app--button edit" onClick={openEditModal}>
-            Edit
-          </button>
-          <button
-            className="invoice-app--button delete"
-            style={
-              invoiceData.status === "pending"
-                ? { margin: "0px 8px" }
-                : { marginLeft: "8px" }
-            }
-            onClick={() => setDeleteOpen(true)}
-          >
-            Delete
-          </button>
-          {invoiceData.status === "pending" && (
-            <MarkPaid updateInvoiceStatus={updateInvoiceStatus} />
-          )}
-        </div>
+        {windowSize.width <= 620 && (
+          <div className="invoice-edit">
+            <button
+              className="invoice-app--button edit"
+              onClick={openEditModal}
+            >
+              Edit
+            </button>
+            <button
+              className="invoice-app--button delete"
+              style={
+                invoiceData.status === "pending"
+                  ? { margin: "0px 8px" }
+                  : { marginLeft: "8px" }
+              }
+              onClick={() => setDeleteOpen(true)}
+            >
+              Delete
+            </button>
+            {invoiceData.status === "pending" && (
+              <MarkPaid updateInvoiceStatus={updateInvoiceStatus} />
+            )}
+          </div>
+        )}
 
         {/* Component for the form for editing the invoice. It shaves off a LOT of code */}
         <InvoiceForm

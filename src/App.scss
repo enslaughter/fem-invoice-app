@@ -19,7 +19,7 @@ body {
   color: black;
   line-height: 15px;
   letter-spacing: -0.25px;
-  background-color: $lightbg;
+
   margin: 0;
 }
 
@@ -84,10 +84,212 @@ button {
 
 .App {
   min-height: 100%;
+  transition: color 1s;
+
+  .invoice-card--id-num {
+    color: black;
+    font-weight: 700;
+  }
+
+  .invoice-item--quantityline {
+    margin-top: 8px;
+  }
+
+  .app-body,
+  .menubar-container,
+  .edit-modal-buttons,
+  .invoice-container,
+  .invoice-info--total,
+  .invoice-edit,
+  .invoice-delete-modal {
+    transition: background-color 1s;
+  }
+
+  .edit-invoice-modal {
+    transition: transform 1s, background-color 1s;
+  }
+
+  .invoice-menu-filters button,
+  .invoice-menu-left > p,
+  .filter-option > label,
+  .invoice-card--id-num,
+  .invoice-card-duedate,
+  .invoice-card--total,
+  .invoice-goback,
+  .form-header,
+  .form-flexbox label,
+  .invoice-info--dates-billto-subheader,
+  .invoice-item--quantityline,
+  .invoice-delete-modal > p:nth-child(1),
+  .invoice-delete-modal > p:nth-child(2) {
+    transition: color 1s;
+  }
+
+  .invoice-menu-filters-popup {
+    transition: background-color 1s, box-shadow 1s;
+  }
+
+  .form-flexbox input,
+  .form-flexbox select {
+    transition: background-color 1s, color 1s, border-color 1s;
+  }
+
+  .form-newitem button {
+    transition: background-color 1s, color 1s;
+    &:hover {
+      transition: none;
+    }
+  }
+
+  .invoice-card,
+  .invoice-main-status,
+  .invoice-status.draft,
+  .invoice-info,
+  .invoice-item--container {
+    transition: background-color 1s, color 1s;
+  }
 }
 
 //This is absolute chaos but its slightly better than changing things in 200 places
 .App[data-theme="dark"] {
+  color: white;
+  .app-body,
+  .menubar-container,
+  .edit-modal-buttons,
+  .invoice-container {
+    background-color: $darkbg;
+    transition: background-color 1s;
+  }
+  .edit-invoice-modal {
+    background-color: $darkbg;
+    transition: background-color 1s transform 1s;
+  }
+  .invoice-card {
+    background-color: $darkblue;
+    color: white;
+    transition: background-color 1s, color 1s;
+  }
+
+  .invoice-main-status,
+  .invoice-info {
+    background-color: $verydarkblue;
+    color: $lightgrey;
+    transition: background-color 1s, color 1s;
+  }
+
+  .invoice-card--id-num,
+  .invoice-card--total,
+  .invoice-goback,
+  .form-header,
+  .invoice-info--dates-billto-subheader {
+    color: white;
+    transition: color 1s;
+  }
+
+  .form-flexbox label {
+    color: $lightgrey;
+    transition: color 1s;
+  }
+
+  .form-flexbox input,
+  .form-flexbox select {
+    color: white;
+    background-color: $darkblue;
+    border-color: #1e2139;
+    &.formerror {
+      border-color: hsl(0, 80%, 63%);
+    }
+    transition: background-color 1s, color 1s, border-color 1s;
+  }
+
+  input[id^="total-"] {
+    background-color: transparent;
+  }
+
+  .invoice-card--duedate {
+    color: white;
+    transition: color 1s;
+  }
+
+  .invoice-menu-filters-popup {
+    background-color: $darkblue;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    transition: background-color 1s, box-shadow 1s;
+  }
+  .invoice-menu-filters button,
+  .invoice-menu-left > p,
+  .filter-option > label {
+    color: white;
+    transition: color 1s;
+  }
+
+  .invoice-status.draft {
+    color: hsl(231, 75, 93);
+    background-color: hsla(231, 75, 93, 0.06);
+    transition: color 1s, background-color 1s;
+  }
+
+  .form-newitem button {
+    color: $lightgrey;
+    background-color: $darkblue;
+    transition: background-color 1s, color 1s;
+    &:hover {
+      background-color: $verydarkblue;
+      transition: none;
+    }
+  }
+
+  .invoice-info--total {
+    background-color: $midnight;
+    transition: background-color 1s;
+  }
+
+  .invoice-item--container {
+    background-color: $darkblue;
+    color: white;
+    transition: background-color 1s, color 1s;
+  }
+
+  .invoice-item--quantityline {
+    color: $grey;
+    transition: color 1s;
+  }
+
+  .invoice-edit {
+    background-color: $verydarkblue;
+    transition: background-color 1s;
+  }
+
+  .invoice-delete-modal {
+    background-color: $verydarkblue;
+    transition: background-color 1s;
+  }
+
+  .invoice-delete-modal > p:nth-child(1) {
+    color: white;
+    transition: color 1s;
+  }
+
+  .invoice-delete-modal > p:nth-child(2) {
+    color: $grey;
+    transition: color 1s;
+  }
+
+  transition: color 1s;
+}
+
+.menubar-container {
+  position: fixed;
+  background-color: $lightbg;
+  transition: background-color 1s;
+  height: 72px;
+}
+
+@media all and (min-width: 620px) {
+  .menubar-container {
+    height: 100vh;
+    width: 72px;
+  }
 }
 
 .menubar,
@@ -188,6 +390,8 @@ button {
   position: fixed;
   overflow-y: scroll;
   margin-top: 72px;
+  background-color: $lightbg;
+  transition: background-color 1s;
 }
 
 @media all and (min-width: 620px) {
@@ -353,6 +557,7 @@ button {
   &:hover {
     border-color: $violet;
   }
+  transition: background-color 1s;
 }
 
 .invoice-card-column {
@@ -363,6 +568,11 @@ button {
 
 .invoice-card--id {
   color: $blue;
+  padding-bottom: 24px;
+}
+
+.invoice-card--due {
+  padding-bottom: 8px;
 }
 
 .invoice-card--duedate {
@@ -423,6 +633,19 @@ button {
   margin: 0 24px;
   color: hsl(231, 23, 61);
   border-radius: 8px;
+}
+
+.invoice-main-status-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media all and (max-width: 620px) {
+  .invoice-main-status-left {
+    flex-basis: 100%;
+  }
 }
 
 .invoice-info {
@@ -505,6 +728,15 @@ button {
   justify-content: center;
   margin-top: 40px;
   padding: 24px;
+}
+
+@media all and (min-width: 620px) {
+  .invoice-edit {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .invoice-app--button {
@@ -874,6 +1106,8 @@ select {
 .invoice-delete-modal {
   background-color: white;
   padding: 32px;
+  margin: 24px;
+  line-height: 22px;
   border-radius: 8px;
 }
 
