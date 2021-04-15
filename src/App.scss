@@ -137,7 +137,14 @@ button {
   .form-newitem button {
     transition: background-color 1s, color 1s;
     &:hover {
-      transition: none;
+      transition: 0s;
+    }
+  }
+  .edit,
+  .button-edit-cancel {
+    transition: 1s;
+    &:hover {
+      transition: 0s;
     }
   }
 
@@ -614,6 +621,12 @@ button {
 
 //Main Invoice Section
 
+.invoice-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .invoice-goback {
   margin: 32px 24px;
   color: black;
@@ -633,6 +646,12 @@ button {
   margin: 0 24px;
   color: hsl(231, 23, 61);
   border-radius: 8px;
+}
+
+@media all and (min-width: 620px) {
+  .invoice-main-status {
+    padding: 24px 32px;
+  }
 }
 
 .invoice-main-status-left {
@@ -656,6 +675,27 @@ button {
   color: hsl(231, 36, 63);
 }
 
+@media all and (min-width: 620px) {
+  .invoice-info {
+    padding: 48px;
+  }
+
+  .invoice-info-desktopflex-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .invoice-info-desktopflex-bottom {
+    display: flex;
+    flex-direction: row;
+    margin-top: 21px;
+    div {
+      flex-basis: 50%;
+    }
+  }
+}
+
 .invoice-info--descripton {
   margin-top: 4px;
 }
@@ -663,6 +703,15 @@ button {
 .invoice-info--senderaddress {
   margin-top: 30px;
   line-height: 18px;
+}
+
+@media all and (min-width: 620px) {
+  .invoice-info--senderaddress {
+    margin: 0;
+    p {
+      text-align: right;
+    }
+  }
 }
 
 .invoice-info--clientaddress {
@@ -681,6 +730,12 @@ button {
   display: flex;
   flex-direction: row;
   margin: 32px 0;
+}
+
+@media all and (min-width: 620px) {
+  .invoice-info--dates-billto-container {
+    margin: 0;
+  }
 }
 
 .invoice-info--dates,
@@ -707,6 +762,11 @@ button {
   background-color: hsl(231, 67, 99);
   font-weight: 700;
   padding: 24px;
+}
+
+@media all and (min-width: 620px) {
+  .invoice-item--container {
+  }
 }
 
 .invoice-info--total {
@@ -774,6 +834,20 @@ button {
     background-color: hsl(231, 20, 27);
     &:hover {
       background-color: $midnight;
+    }
+  }
+}
+
+.App[data-theme="dark"] {
+  .edit,
+  .button-edit-cancel {
+    color: $lightgrey;
+    background-color: $darkblue;
+    transition: 1s;
+    &:hover {
+      color: $blue;
+      background-color: $lightbg;
+      transition: 0s;
     }
   }
 }

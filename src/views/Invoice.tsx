@@ -70,7 +70,12 @@ function Invoice(props: any) {
         className="invoice-container"
         style={
           windowSize.width > 620
-            ? { height: `${windowSize.height - 32}px`, position: "relative" }
+            ? {
+                height: `${windowSize.height - 32}px`,
+                position: "relative",
+                width: "790px",
+                marginTop: "32px",
+              }
             : {}
         }
       >
@@ -112,62 +117,76 @@ function Invoice(props: any) {
         </div>
 
         <div className="invoice-info">
-          <span className="invoice-card--id">
-            <span>#</span>
-            <span className="invoice-card--id-num">{invoiceData.id}</span>
-          </span>
-          <p className="invoice-info--descripton">{invoiceData.description}</p>
-          <div className="invoice-info--senderaddress">
-            <p>{invoiceData.senderAddress.street}</p>
-            <p>{invoiceData.senderAddress.city}</p>
-            <p>{invoiceData.senderAddress.postCode}</p>
-            <p>{invoiceData.senderAddress.country}</p>
+          <div className="invoice-info-desktopflex-top">
+            <div>
+              <span className="invoice-card--id">
+                <span>#</span>
+                <span className="invoice-card--id-num">{invoiceData.id}</span>
+              </span>
+              <p className="invoice-info--descripton">
+                {invoiceData.description}
+              </p>
+            </div>
+
+            <div className="invoice-info--senderaddress">
+              <p>{invoiceData.senderAddress.street}</p>
+              <p>{invoiceData.senderAddress.city}</p>
+              <p>{invoiceData.senderAddress.postCode}</p>
+              <p>{invoiceData.senderAddress.country}</p>
+            </div>
           </div>
 
-          <div className="invoice-info--dates-billto-container">
-            <div className="invoice-info--dates">
-              <div>
-                <p>Invoice Date</p>
-                <p
-                  className="invoice-info--dates-billto-subheader"
-                  style={
-                    invoiceData.clientAddress.street !== ""
-                      ? {}
-                      : { marginBottom: "24px" }
-                  }
-                >
-                  {invoiceData.createdAt}
-                </p>
+          <div className="invoice-info-desktopflex-bottom">
+            <div className="invoice-info--dates-billto-container">
+              <div className="invoice-info--dates">
+                <div>
+                  <p>Invoice Date</p>
+                  <p
+                    className="invoice-info--dates-billto-subheader"
+                    style={
+                      invoiceData.clientAddress.street !== ""
+                        ? {}
+                        : { marginBottom: "24px" }
+                    }
+                  >
+                    {invoiceData.createdAt}
+                  </p>
+                </div>
+                <div>
+                  <p>Payment Due</p>
+                  <p className="invoice-info--dates-billto-subheader">
+                    {invoiceData.paymentDue}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p>Payment Due</p>
-                <p className="invoice-info--dates-billto-subheader">
-                  {invoiceData.paymentDue}
-                </p>
-              </div>
-            </div>
-            <div className="invoice-info--billto">
-              <div>
-                <p>Bill To</p>
-                <p className="invoice-info--dates-billto-subheader">
-                  {invoiceData.clientName}
-                </p>
-                <div className="invoice-info--clientaddress">
-                  <p>{invoiceData.clientAddress.street}</p>
-                  <p>{invoiceData.clientAddress.city}</p>
-                  <p>{invoiceData.clientAddress.postCode}</p>
-                  <p>{invoiceData.clientAddress.country}</p>
+              <div className="invoice-info--billto">
+                <div>
+                  <p>Bill To</p>
+                  <p className="invoice-info--dates-billto-subheader">
+                    {invoiceData.clientName}
+                  </p>
+                  <div className="invoice-info--clientaddress">
+                    <p>{invoiceData.clientAddress.street}</p>
+                    <p>{invoiceData.clientAddress.city}</p>
+                    <p>{invoiceData.clientAddress.postCode}</p>
+                    <p>{invoiceData.clientAddress.country}</p>
+                  </div>
                 </div>
               </div>
             </div>
+            <div>
+              <p
+                style={
+                  invoiceData.clientEmail !== "" ? {} : { display: "none" }
+                }
+              >
+                Sent to
+              </p>
+              <p className="invoice-info--dates-billto-subheader">
+                {invoiceData.clientEmail}
+              </p>
+            </div>
           </div>
-
-          <p style={invoiceData.clientEmail !== "" ? {} : { display: "none" }}>
-            Sent to
-          </p>
-          <p className="invoice-info--dates-billto-subheader">
-            {invoiceData.clientEmail}
-          </p>
 
           <div className="invoice-info--items">
             <div className="invoice-info--items">

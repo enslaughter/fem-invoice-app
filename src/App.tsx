@@ -169,12 +169,14 @@ function App() {
               />
             </Route>
             <Route path="/invoice/:invoiceid" exact>
-              <Invoice
-                lookupInvoice={lookupInvoice}
-                updateInvoice={updateInvoice}
-                deleteInvoice={deleteInvoice}
-                setModalOpen={setModalOpen}
-              />
+              <div className="invoice-wrapper">
+                <Invoice
+                  lookupInvoice={lookupInvoice}
+                  updateInvoice={updateInvoice}
+                  deleteInvoice={deleteInvoice}
+                  setModalOpen={setModalOpen}
+                />
+              </div>
             </Route>
             <Route path="/invoice/:invoiceid/edit">
               <Edit lookupInvoice={lookupInvoice} />
