@@ -369,12 +369,16 @@ button {
 }
 
 .menu-button-profile--container {
+  cursor: default;
   height: 72px;
   padding: 0px 24px;
   border-left: 1px solid hsla(231, 20, 36, 1);
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  button {
+    cursor: default;
+  }
 }
 
 @media all and (min-width: 620px) {
@@ -386,7 +390,9 @@ button {
 }
 
 .menu-button-profile {
+  cursor: default;
   img {
+    cursor: default;
     width: 32px;
     height: 32px;
     border-radius: 16px;

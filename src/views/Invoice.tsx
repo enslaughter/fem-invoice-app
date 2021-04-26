@@ -29,7 +29,10 @@ function Invoice(props: any) {
   const [invoiceData, setInvoiceData] = useState(
     props.lookupInvoice(grabbedID.invoiceid)
   );
-  const [invoiceStatus, setInvoiceStatus] = useState(invoiceData.status);
+
+  const [invoiceStatus, setInvoiceStatus] = useState(
+    invoiceData ? invoiceData.status : ""
+  );
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
@@ -301,7 +304,20 @@ function Invoice(props: any) {
       </div>
     );
   } else {
-    return <div>Error! This invoice doesn't seem to exist!</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "10%",
+        }}
+      >
+        <h1>Uh oh! This invoice doesn't seem to exist!</h1>
+        <Link to="/">Go Back Home</Link>
+      </div>
+    );
   }
 }
 

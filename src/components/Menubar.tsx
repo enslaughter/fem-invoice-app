@@ -16,7 +16,7 @@ function Menubar(props: any) {
   return (
     <div className="menubar-container">
       <div className="menubar">
-        <Link to="/">
+        <Link to="/" title="Home">
           <div className="menu-logo">
             <div className="menu-logo--styling"></div>
             <div className="menu-logo--container">
@@ -34,7 +34,7 @@ function Menubar(props: any) {
             )}
           </button>
           <div className="menu-button-profile--container">
-            <button className="menu-button-profile">
+            <button className="menu-button-profile" disabled={true}>
               <img src={avatar} alt=""></img>
             </button>
           </div>
