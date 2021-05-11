@@ -1,46 +1,25 @@
-# Getting Started with Create React App
+# Invoice App
+This project is a simple invoice management app derived from the Frontend Mentor challenge. It is constructed in React with Typescript and SASS. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## UI Features
 
-## Available Scripts
+* Responsive Design for a large range of devices
+* Theme switching (Light and Dark modes available)
+* Various modals for forms, confirmations, and invoice filtering
+* Error messages for invalid form fields
 
-In the project directory, you can run:
+## Code Features
 
-### `npm start`
+* Pages are handled via react router
+* Form validation is handled via regex
+* Website loads preferred browser/system theme automatically
+* Page information is loaded dynamically through JSON data
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## My Notes
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This project was a fun challenge for me to complete. This was my first real project that involved Typescript, which helped me recognize some errors in how I passed data in through my props/functions. I tried a new way of handling theme management and media queries by trying to organize them in an easier-to-manage way. This is my first attempt at a large-scale form validation so I'm happy with how it turned out, especially how I handled the price inputs. To avoid issues with mutation, I also coded my own cloning function for creating temporary copies of the invoice data for putting in the editing menu. 
 
-### `npm test`
+Though it wasn't present in the final product, I did have a slightly more elaborate routing structure where a link to /(invoiceID)/edit would lead to a page for editing the invoice. Eventually this was turned into a large modal to better reflect the intended design. There are other parts of the project that I would like to clean up, such as a small issue with stacking order when the editing modal transitions, adding end-to-end testing, and breaking up the code into smaller, more easily readable pieces. I also intend to add in client-side storage at some point, as this is a serverless project.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Credits
+Initial design and images purchased from Frontend Mentor
